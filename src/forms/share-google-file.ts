@@ -1,7 +1,7 @@
 import { MattermostClient } from '../clients';
 import { getGoogleDriveClient } from '../clients/google-client';
 import { ExceptionType, GooglePermissionRoleByOption, optFileShare } from '../constant';
-import { ChannelMember, ExtendedAppCallRequest, MattermostOptions, Schema$File, User } from '../types';
+import { ChannelMember, ExtendedAppCallRequest, MattermostOptions, Schema$File, Schema$Permission, User } from '../types';
 import { CreateFileForm } from '../types/forms';
 import { ShareFileFunction } from '../types/functions';
 import { configureI18n } from '../utils/translations';
@@ -68,7 +68,7 @@ async function shareWithChannel(call: ExtendedAppCallRequest, file: Schema$File,
                 sendNotificationEmail: true,
             },
         };
-        promises.push(tryPromise(drive.permissions.create(body), ExceptionType.TEXT_ERROR, i18nObj.__('general.google-error'), call));
+        promises.push(tryPromise<Schema$Permission>(drive.permissions.create(body), ExceptionType.TEXT_ERROR, i18nObj.__('create-binding.errors.share-member', { member: user.email }), call));
     }
     await Promise.all(promises);
 }

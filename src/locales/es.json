@@ -1,5 +1,6 @@
 {
   "general": {
+    "token-failed": "\"Google falló\": Google falló al refrescar el token de acceso",
     "google-error": "Google falló: ",
     "mattermost-error": "Mattermost falló: ",
     "validation-user": {
@@ -150,7 +151,8 @@
       "success": "¡El archivo Google Sheets \"{{ file }}\" fue creado!"
     },
     "errors": {
-      "share-anyone": "\"Google falló\": Google falló en cambiar los permisos del archivo a \"Cualquiera con el link\""
+      "share-anyone": "\"Google falló\": Google falló en cambiar los permisos del archivo a \"Cualquiera con el link\"",
+      "share-member": "\"Google falló\": Google falló en compartir el archivo con \"{{ member }}\""
     }
   },
   "comments": {

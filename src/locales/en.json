@@ -1,5 +1,6 @@
 {
 	"general": {
+		"token-failed": "\"Google failed\": Google failed to refresh access token",
 		"google-error": "Google failed: ",
 		"mattermost-error": "Mattermost failed: ",
 		"validation-user": {
@@ -150,7 +151,8 @@
 			"success": "New Google Sheets \"{{ file }}\" created!"
 		},
 		"errors": {
-			"share-anyone": "\"Google failed\": Google failed to change file's permission to \"Anyone with the link\""
+			"share-anyone": "\"Google failed\": Google failed to change file's permission to \"Anyone with the link\"",
+			"share-member": "\"Google failed\": Google failed to share file with \"{{ member }}\""
 		}
 	},
 	"comments": {

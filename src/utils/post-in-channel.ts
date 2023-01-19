@@ -1,8 +1,10 @@
-import { ExceptionType } from 'src/constant';
+import { ExceptionType } from '../constant';
 import { MattermostClient } from '../clients';
 import { Channel, ExtendedAppCallRequest, MattermostOptions, PostCreate, PostResponse } from '../types';
-import { tryPromise } from './utils';
+
 import { configureI18n } from '../utils/translations';
+
+import { tryPromise } from './utils';
 
 export const postBotChannel = async (call: ExtendedAppCallRequest, message: string, props: any = {}) => {
     const mattermostUrl: string = call.context.mattermost_site_url!;

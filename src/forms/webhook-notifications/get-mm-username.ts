@@ -28,7 +28,7 @@ export async function getMattermostUserFromGoogleEmail(call: WebhookRequest, aut
         const mmClient: MattermostClient = new MattermostClient(mattermostOpts);
 
         const mmUser: User | undefined = await tryPromise<User>(mmClient.getUser(userId), ExceptionType.TEXT_ERROR, i18nObj.__('general.mattermost-errors.get-user'), call);
-        
+
         if (mmUser) {
             return mmUser;
         }

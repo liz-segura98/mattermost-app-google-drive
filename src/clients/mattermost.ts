@@ -1,3 +1,5 @@
+import stream from 'stream';
+
 import axios, { AxiosResponse } from 'axios';
 
 import {
@@ -16,7 +18,6 @@ import {
 } from '../types';
 import { AppsPluginName, Routes } from '../constant';
 import { replace } from '../utils/utils';
-import stream from 'stream';
 
 export class MattermostClient {
     private readonly config: MattermostOptions;

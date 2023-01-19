@@ -1,7 +1,8 @@
+import stream from 'stream';
+
 import { AppSelectOption } from '@mattermost/types/lib/apps';
 import { head } from 'lodash';
 import moment from 'moment';
-import stream from 'stream';
 
 import { MattermostClient } from '../clients';
 import { getGoogleDriveClient } from '../clients/google-client';

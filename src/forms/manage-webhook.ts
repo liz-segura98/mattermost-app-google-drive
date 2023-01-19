@@ -1,6 +1,7 @@
 import { drive_v3 } from 'googleapis';
 import { head } from 'lodash';
 import moment from 'moment';
+
 import { configureI18n } from '../utils/translations';
 
 import { getGoogleDriveActivityClient, getGoogleDriveClient } from '../clients/google-client';

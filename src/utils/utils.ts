@@ -1,7 +1,5 @@
-import { AppCallResponse } from '@mattermost/types/lib/apps';
-
 import GeneralConstants from '../constant/general';
-import { AppActingUser, ExtendedAppCallRequest, KVGoogleData, KVStoreOptions, Oauth2App } from '../types';
+import { AppActingUser, ExpandAppCallResponse, ExtendedAppCallRequest, KVGoogleData, KVStoreOptions, Oauth2App } from '../types';
 import { ExceptionType, KVStoreGoogleData } from '../constant';
 
 import config from '../config';
@@ -10,7 +8,6 @@ import { KVStoreClient } from '../clients/kvstore';
 
 import { Exception } from './exception';
 import { newErrorCallResponseWithMessage, newOKCallResponseWithMarkdown } from './call-responses';
-import { logger } from './logger';
 
 export function replace(value: string, searchValue: string, replaceValue: string): string {
     return value.replace(searchValue, replaceValue);
@@ -44,7 +41,7 @@ export function tryPromise<T>(p: Promise<any>, exceptionType: ExceptionType, mes
         }).
         catch((error) => {
             const errorMessage: string = errorDataMessage(error);
-            throw new Exception(exceptionType, `${message} ${errorMessage}`, call);
+            throw new Exception(exceptionType, message, call, errorMessage);
         });
 }
 
@@ -55,15 +52,15 @@ export function tryPromiseMattermost<T>(p: Promise<any>, exceptionType: Exceptio
         }).
         catch((error) => {
             const errorMessage: string = errorDataMessage(error);
-            throw new Exception(exceptionType, `${message} ${errorMessage}`, call);
+            throw new Exception(exceptionType, message, call, errorMessage);
         });
 }
 
-export function throwException(exceptionType: ExceptionType, message: string, call: ExtendedAppCallRequest) {
-    throw new Exception(exceptionType, `${message}`, call);
+export function throwException(exceptionType: ExceptionType, message: string, call: ExtendedAppCallRequest): Exception {
+    throw new Exception(exceptionType, message, call);
 }
 
-export function showMessageToMattermost(exception: Exception | Error): AppCallResponse {
+export function showMessageToMattermost(exception: Exception | Error): ExpandAppCallResponse {
     if (!(exception instanceof Exception)) {
         return newErrorCallResponseWithMessage(exception.message);
     }

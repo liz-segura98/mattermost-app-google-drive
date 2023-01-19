@@ -53,7 +53,7 @@ export async function manageReplyCommentSubmit(call: ExtendedAppCallRequest): Pr
         },
     };
 
-    await tryPromise<any>(drive.replies.create(newReply), ExceptionType.TEXT_ERROR, i18nObj.__('general.google-error'), call);
+    await tryPromise<any>(drive.replies.create(newReply), ExceptionType.TEXT_ERROR, i18nObj.__('comments.manage-reply-comment.create-failed'), call);
 
     const postId: string = call.context.post?.id as string;
     const channelId: string = call.context.post?.channel_id as string;

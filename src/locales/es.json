@@ -85,9 +85,13 @@
     "response": {
       "noSession": "Imposible de desconectar. No se encuentra sesión activa.",
       "success": "¡Se ha desconectado correctamente a tu cuenta de Google!"
-    }
+    },
+    "about-failed": "\"Google falló\": Google falló al obtener la información del usuario que se encuentra conectándose"
   },
   "notifications-binding": {
+    "stop-failed": "\"Google falló\": Google falló al detener la recepción de noticaciones",
+    "pagetoken-failed": "\"Google falló\": Google falló al obtener la página para rastrear las noticaciones",
+    "create-failed": "\"Google falló\": Google falló al crear la subscripción de las noticaciones",
     "already-disabled": "Google notifications are already disabled",
     "response": {
       "disabled": "Las notificaciones de Google se han detenido",
@@ -129,15 +133,24 @@
     },
     "docs": {
       "title": "Crear un Documento en Google",
-      "success": "¡El archivo Google Doc {{ file }} fue creado!"
+      "create-failed": "\"Google falló\": Google falló en crear el archivo Google Docs \"{{ file }}\"",
+      "get-file-failed": "\"Google falló\": Google falló en obtener el archivo Google Docs \"{{ file }}\"",
+      "success": "¡El archivo Google Docs \"{{ file }}\" fue creado!"
     },
     "slides": {
       "title": "Crear una Presentación en Google",
-      "success": "¡El archivo Google Slides {{ file }} fue creado!"
+      "create-failed": "\"Google falló\": Google falló en crear el archivo Google Slides \"{{ file }}\"",
+      "get-file-failed": "\"Google falló\": Google falló en obtener el archivo Google Slides \"{{ file }}\"",
+      "success": "¡El archivo Google Slides \"{{ file }}\" fue creado!"
     },
     "sheets": {
       "title": "Crear una Hoja de Cálculo en Google",
-      "success": "¡El archivo Google Sheets {{ file }} fue creado!"
+      "create-failed": "\"Google falló\": Google falló en crear el archivo Google Sheets \"{{ file }}\"",
+      "get-file-failed": "\"Google falló\": Google falló en obtener el archivo Google Sheets \"{{ file }}\"",
+      "success": "¡El archivo Google Sheets \"{{ file }}\" fue creado!"
+    },
+    "errors": {
+      "share-anyone": "\"Google falló\": Google falló en cambiar los permisos del archivo a \"Cualquiera con el link\""
     }
   },
   "comments": {
@@ -177,7 +190,11 @@
       "message": "{{ userDisplay }} compartió un artículo contigo"
     },
     "manage-reply-comment": {
+      "create-failed": "\"Google falló\": Google falló al crear la respuesta a este comentario",
       "message": "Respondiste a este comentario con"
+    },
+    "errors": {
+      "get-failed": "\"Google falló\": Google falló al obtener el comentario"
     }
   },
   "upload-google": {
@@ -187,12 +204,18 @@
       "title": "Subir a Google Drive"
     },
     "confirmation-submit": {
+      "upload-failed": "\"Google falló\": Google falló al subir el archivo \"{{ file }}\"",
       "footer": "Google Drive para Mattermost | {{ date }}",
-      "multiple-files": "¡Archivo subido a Google Drive!",
-      "single-file": "¡Archivos subidos a Google Drive!"
+      "multiple-files": "¡Archivos subidos a Google Drive!",
+      "single-file": "¡Archivo subido a Google Drive!"
     }
   },
   "install": {
     "message": "Para terminar de configurar la aplicación Google Drive, lea la sección [Inicio rápido]( {{ homepageUrl }} #quick-start) del LÉAME."
+  },
+  "manage-webhook": {
+    "pagetoken-failed": "\"Google falló\": Google falló al obtener la página para rastrear las noticaciones",
+    "list-failed": "\"Google falló\": Google falló al obtener el listado de movimientos",
+    "activity-failed": "\"Google falló\": Google falló al obtener la actividad"
   }
 }

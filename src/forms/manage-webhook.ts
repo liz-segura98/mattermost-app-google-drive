@@ -1,6 +1,7 @@
 import { drive_v3 } from 'googleapis';
 import { head } from 'lodash';
 import moment from 'moment';
+import { configureI18n } from '../utils/translations';
 
 import { getGoogleDriveActivityClient, getGoogleDriveClient } from '../clients/google-client';
 import { ExceptionType } from '../constant';
@@ -16,6 +17,7 @@ export async function manageWebhookCall(call: WebhookRequest): Promise<void> {
     if (call.values.headers['X-Goog-Resource-State'] !== GoogleResourceState.CHANGE) {
         return;
     }
+    const i18nObj = configureI18n(call.context);
 
     const paramsd = new URLSearchParams(call.values.rawQuery);
     const userId = paramsd.get('userId');
@@ -26,13 +28,13 @@ export async function manageWebhookCall(call: WebhookRequest): Promise<void> {
     call.context = { ...call.context, acting_user };
 
     const drive: drive_v3.Drive = await getGoogleDriveClient(call);
-    const pageToken = await tryPromise<StartPageToken>(drive.changes.getStartPageToken(), ExceptionType.TEXT_ERROR, 'Google failed: ', call);
+    const pageToken = await tryPromise<StartPageToken>(drive.changes.getStartPageToken(), ExceptionType.TEXT_ERROR, i18nObj.__('manage-webhook.pagetoken-failed'), call);
     const params = {
         pageToken: (Number(pageToken?.startPageToken) - GeneralConstants.REMOVE_ONE).toString(),
         fields: '*',
     };
 
-    const list = await tryPromise<ChangeList>(drive.changes.list(params), ExceptionType.TEXT_ERROR, 'Google failed: ', call);
+    const list = await tryPromise<ChangeList>(drive.changes.list(params), ExceptionType.TEXT_ERROR, i18nObj.__('manage-webhook.list-failed'), call);
     const lastChange = head(list.changes) as Change;
     const file = lastChange?.file as Schema$File;
     if (Boolean(file.lastModifyingUser?.me)) {
@@ -55,7 +57,7 @@ export async function manageWebhookCall(call: WebhookRequest): Promise<void> {
         itemName: `items/${file.id}`,
     };
 
-    const activityRes = await tryPromise<GA$QueryDriveActivityResponse>(activityClient.activity.query({ requestBody: paramsActivity }), ExceptionType.TEXT_ERROR, 'Google failed: ', call);
+    const activityRes = await tryPromise<GA$QueryDriveActivityResponse>(activityClient.activity.query({ requestBody: paramsActivity }), ExceptionType.TEXT_ERROR, i18nObj.__('manage-webhook.activity-failed'), call);
     const activity = head(activityRes?.activities) as GA$DriveActivity;
     if (Boolean(activity.primaryActionDetail?.permissionChange)) {
         await permissionsChanged(call, file, activity);

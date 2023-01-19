@@ -111,7 +111,7 @@ export async function uploadFileConfirmationSubmit(call: ExtendedAppCallRequest)
             requestBody,
             media,
             fields: 'id,name,webViewLink,iconLink,owners,createdTime',
-        }), ExceptionType.TEXT_ERROR, i18nObj.__('general.google-error'), call);
+        }), ExceptionType.TEXT_ERROR, i18nObj.__('upload-google.confirmation-submit.upload-failed', { file: metadata.name }), call);
 
         responseArray.push(fileUploaded);
     }

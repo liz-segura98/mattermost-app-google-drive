@@ -32,7 +32,7 @@ export async function stopNotificationsCall(call: ExtendedAppCallRequest): Promi
             resourceId: channelNotification.resourceId,
         },
     };
-    await tryPromise<Schema$Channel>(drive.channels.stop(stopParams), ExceptionType.TEXT_ERROR, i18nObj.__('general.google-error'), call);
+    await tryPromise<Schema$Channel>(drive.channels.stop(stopParams), ExceptionType.TEXT_ERROR, i18nObj.__('notifications-binding.stop-failed'), call);
     await kvStoreClient.kvSet(`drive_notifications-${actingUserId}`, {});
 
     return i18nObj.__('notifications-binding.response.disabled');
@@ -51,7 +51,7 @@ export async function startNotificationsCall(call: ExtendedAppCallRequest): Prom
 
     const drive = await getGoogleDriveClient(call);
 
-    const pageToken = await tryPromise<StartPageToken>(drive.changes.getStartPageToken(), ExceptionType.TEXT_ERROR, i18nObj.__('general.google-error'), call);
+    const pageToken = await tryPromise<StartPageToken>(drive.changes.getStartPageToken(), ExceptionType.TEXT_ERROR, i18nObj.__('notifications-binding.pagetoken-failed'), call);
 
     const urlWithParams = new URL(`${mattermostUrl}${appPath}${Routes.App.CallPathIncomingWebhookPath}`);
     urlWithParams.searchParams.append(KVStoreGoogleData.USER_ID, actingUserId);
@@ -72,7 +72,7 @@ export async function startNotificationsCall(call: ExtendedAppCallRequest): Prom
         },
     };
 
-    const watchChannel = await tryPromise<Schema$Channel>(drive.changes.watch(params), ExceptionType.TEXT_ERROR, i18nObj.__('general.google-error'), call);
+    const watchChannel = await tryPromise<Schema$Channel>(drive.changes.watch(params), ExceptionType.TEXT_ERROR, i18nObj.__('notifications-binding.create-failed'), call);
 
     const options: KVStoreOptions = {
         mattermostUrl,

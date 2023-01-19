@@ -73,7 +73,7 @@ export async function oAuth2Complete(call: ExtendedAppCallRequest): Promise<stri
     const aboutParams: StandardParameters = {
         fields: `${GoogleConstants.USER}`,
     };
-    const aboutUser = await tryPromise<Schema$About>(drive.about.get(aboutParams), ExceptionType.TEXT_ERROR, i18nObj.__('general.google-error'), call);
+    const aboutUser = await tryPromise<Schema$About>(drive.about.get(aboutParams), ExceptionType.TEXT_ERROR, i18nObj.__('connect-binding.about-failed'), call);
 
     const storedToken: Oauth2CurrentUser = {
         refresh_token: <string>tokenBody.tokens?.refresh_token,

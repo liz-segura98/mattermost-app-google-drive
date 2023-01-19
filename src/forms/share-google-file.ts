@@ -31,7 +31,7 @@ async function shareWithAnyone(call: ExtendedAppCallRequest, file: Schema$File, 
             type: 'anyone',
         },
     };
-    await tryPromise<any>(drive.permissions.create(body), ExceptionType.TEXT_ERROR, i18nObj.__('general.google-error'), call);
+    await tryPromise<any>(drive.permissions.create(body), ExceptionType.TEXT_ERROR, i18nObj.__('create-binding.errors.share-anyone'), call);
 }
 
 async function shareWithChannel(call: ExtendedAppCallRequest, file: Schema$File, channelId: string,): Promise<void> {

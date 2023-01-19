@@ -79,7 +79,8 @@
 			"alreadyLoggedIn": "You are already logged into Google",
 			"codeNotProvided": "Bad Request: code param not provided",
 			"success": "You have successfully connected your Google account!"
-		}
+		},
+		"about-failed": "\"Google failed\": Google failed to get information about the user provided"
 	},
 	"disconnect-binding": {
 		"response": {
@@ -88,6 +89,9 @@
 		}
 	},
 	"notifications-binding": {
+		"stop-failed": "\"Google failed\": Google failed to stop receiving notifications",
+		"pagetoken-failed": "\"Google failed\": Google failed to get start page notifications",
+		"create-failed": "\"Google failed\": Google failed to create subacription to notifications",
 		"already-disabled": "Google notifications are already disabled",
 		"response": {
 			"disabled": "Google notifications are disabled!",
@@ -129,15 +133,24 @@
 		},
 		"docs": {
 			"title": "Create a Google Document",
-			"success": "New Google Doc {{ file }} created!"
+			"create-failed": "\"Google failed\": Google failed to create Google Doc \"{{ file }}\"",
+			"get-file-failed": "\"Google failed\": Google failed to get Google Doc \"{{ file }}\"",
+			"success": "New Google Doc \"{{ file }}\" created!"
 		},
 		"slides": {
 			"title": "Create a Google Presentation",
-			"success": "New Google Slides {{ file }} created!"
+			"create-failed": "\"Google failed\": Google failed to create Google Slides \"{{ file }}\"",
+			"get-file-failed": "\"Google failed\": Google failed to get Google Slides \"{{ file }}\"",
+			"success": "New Google Slides \"{{ file }}\" created!"
 		},
 		"sheets": {
 			"title": "Create a Google Spreadsheet",
-			"success": "New Google Sheets {{ file }} created!"
+			"create-failed": "\"Google failed\": Google failed to create Google Sheets \"{{ file }}\"",
+			"get-file-failed": "\"Google failed\": Google failed to get Google Sheets \"{{ file }}\"",
+			"success": "New Google Sheets \"{{ file }}\" created!"
+		},
+		"errors": {
+			"share-anyone": "\"Google failed\": Google failed to change file's permission to \"Anyone with the link\""
 		}
 	},
 	"comments": {
@@ -177,9 +190,12 @@
 			}
 		},
 		"manage-reply-comment": {
+			"create-failed": "\"Google failed\": Google failed to reply to this comment",
 			"message": "You replied to this comment with"
 		},
-		"text-comment": "comments.text-comment"
+		"errors": {
+			"get-failed": "\"Google failed\": Google failed to get provided comment"
+		}
 	},
 	"upload-google": {
 		"confirmation-call": {
@@ -188,12 +204,18 @@
 			"title": "Upload to Google Drive"
 		},
 		"confirmation-submit": {
+			"upload-failed": "\"Google failed\": Google failed to upload the file \"{{ file }}\"",
 			"footer": "Google Drive for Mattermost | {{ date }}",
-			"multiple-files": "File uploaded to Google Drive!",
-			"single-file": "Files uploaded to Google Drive!"
+			"multiple-files": "Files uploaded to Google Drive!",
+			"single-file": "File uploaded to Google Drive!"
 		}
 	},
 	"install": {
 		"message": "To finish configuring the Google Drive app please read the [Quick Start]( {{ homepageUrl }} #quick-start) section of the README"
+	},
+	"manage-webhook": {
+		"pagetoken-failed": "\"Google failed\": Google failed to get start page notifications",
+		"list-failed": "\"Google failed\": Google failed to get list of actions",
+		"activity-failed": "\"Google failed\": Google failed to get activity"
 	}
 }

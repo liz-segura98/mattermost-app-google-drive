@@ -6,10 +6,13 @@ import {
     WebhookRequest,
 } from '../../types';
 import { KVGoogleData, KVGoogleUser } from '../../types/kv-store';
-import { getKVGoogleData } from '../../utils/utils';
+import { getKVGoogleData, tryPromise } from '../../utils/utils';
 import { MattermostClient } from '../../clients';
+import { ExceptionType } from '../../constant';
+import { configureI18n } from '../../utils/translations';
 
 export async function getMattermostUserFromGoogleEmail(call: WebhookRequest, authorEmail: string): Promise<User | null> {
+    const i18nObj = configureI18n(call.context);
     const kvGoogleData: KVGoogleData = await getKVGoogleData(call);
     const kvGUser: KVGoogleUser | undefined = kvGoogleData?.userData?.find((user) => head(Object.values(user))?.user_email === authorEmail);
 
@@ -24,7 +27,8 @@ export async function getMattermostUserFromGoogleEmail(call: WebhookRequest, aut
         };
         const mmClient: MattermostClient = new MattermostClient(mattermostOpts);
 
-        const mmUser: User | undefined = await mmClient.getUser(userId);
+        const mmUser: User | undefined = await tryPromise<User>(mmClient.getUser(userId), ExceptionType.TEXT_ERROR, i18nObj.__('general.mattermost-errors.get-user'), call);
+        
         if (mmUser) {
             return mmUser;
         }

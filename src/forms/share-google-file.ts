@@ -49,9 +49,9 @@ async function shareWithChannel(call: ExtendedAppCallRequest, file: Schema$File,
     };
     const mmClient: MattermostClient = new MattermostClient(mattermostOpts);
 
-    const membersOfChannel: ChannelMember[] = await mmClient.getChannelMembers(channelId);
+    const membersOfChannel: ChannelMember[] = await tryPromise<ChannelMember[]>(mmClient.getChannelMembers(channelId), ExceptionType.TEXT_ERROR, i18nObj.__('general.mattermost-errors.get-members'), call);
     const userIDs = membersOfChannel.map((user) => user.user_id);
-    const users: User[] = await mmClient.getUsersById(userIDs);
+    const users: User[] = await tryPromise<User[]>(mmClient.getUsersById(userIDs), ExceptionType.TEXT_ERROR, i18nObj.__('general.mattermost-errors.get-users'), call);
     const promises: Promise<any>[] = [];
     for (let index = 0; index < users.length; index++) {
         const user = users[index];

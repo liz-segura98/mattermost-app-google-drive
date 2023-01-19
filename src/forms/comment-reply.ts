@@ -1,7 +1,7 @@
 import { MattermostClient } from '../clients';
 import { getGoogleDriveClient } from '../clients/google-client';
 import { AppExpandLevels, AppFieldSubTypes, AppFieldTypes, ExceptionType, GoogleDriveIcon, ReplyCommentForm, Routes } from '../constant';
-import { ExpandAppForm, ExtendedAppCallRequest, MattermostOptions, Params$Resource$Replies$Create, PostCreate } from '../types';
+import { ExpandAppForm, ExtendedAppCallRequest, MattermostOptions, Params$Resource$Replies$Create, PostCreate, PostResponse } from '../types';
 import { CommentState, ReplyCommentFormType } from '../types/forms';
 import { configureI18n } from '../utils/translations';
 import { tryPromise } from '../utils/utils';
@@ -72,7 +72,8 @@ export async function manageReplyCommentSubmit(call: ExtendedAppCallRequest): Pr
         channel_id: <string>channelId,
         root_id: postId,
     };
-    await mmClient.createPost(post);
+
+    await tryPromise<PostResponse>(mmClient.createPost(post), ExceptionType.TEXT_ERROR, i18nObj.__('general.mattermost-errors.post-create'), call);
 
     return message;
 }

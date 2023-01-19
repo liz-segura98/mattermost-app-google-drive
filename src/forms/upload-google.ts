@@ -1,6 +1,7 @@
 import { AppSelectOption } from '@mattermost/types/lib/apps';
 import { head } from 'lodash';
 import moment from 'moment';
+import stream from 'stream';
 
 import { MattermostClient } from '../clients';
 import { getGoogleDriveClient } from '../clients/google-client';
@@ -8,7 +9,7 @@ import { AppExpandLevels, AppFieldTypes, ExceptionType, FilesToUpload, GoogleDri
 import { ExpandAppField, ExpandAppForm, ExtendedAppCallRequest, MattermostOptions, PostCreate, PostResponse, Schema$File, Schema$User } from '../types';
 import { SelectedUploadFilesForm } from '../types/forms';
 import { configureI18n } from '../utils/translations';
-import { throwException, tryPromise, tryPromiseMattermost } from '../utils/utils';
+import { throwException, tryPromise } from '../utils/utils';
 
 export async function uploadFileConfirmationCall(call: ExtendedAppCallRequest): Promise<ExpandAppForm> {
     const i18nObj = configureI18n(call.context);
@@ -23,7 +24,7 @@ export async function uploadFileConfirmationCall(call: ExtendedAppCallRequest): 
     };
     const mmClient: MattermostClient = new MattermostClient(mattermostOpts);
 
-    const Post: PostResponse = await tryPromiseMattermost<PostResponse>(mmClient.getPost(postId), ExceptionType.TEXT_ERROR, i18nObj.__('general.mattermost-error'), call);
+    const Post: PostResponse = await tryPromise<PostResponse>(mmClient.getPost(postId), ExceptionType.TEXT_ERROR, i18nObj.__('general.mattermost-errors.get-post'), call);
 
     const fileIds = Post.file_ids;
     if (!fileIds || !fileIds.length) {
@@ -82,7 +83,7 @@ export async function uploadFileConfirmationSubmit(call: ExtendedAppCallRequest)
     };
     const mmClient: MattermostClient = new MattermostClient(mattermostOpts);
 
-    const post: PostResponse = await tryPromiseMattermost<PostResponse>(mmClient.getPost(postId), ExceptionType.TEXT_ERROR, i18nObj.__('general.mattermost-error'), call);
+    const post: PostResponse = await tryPromise<PostResponse>(mmClient.getPost(postId), ExceptionType.TEXT_ERROR, i18nObj.__('general.mattermost-errors.get-post'), call);
 
     const fileIds = post.file_ids;
     const filesMetadata = post.metadata?.files;
@@ -96,7 +97,7 @@ export async function uploadFileConfirmationSubmit(call: ExtendedAppCallRequest)
             continue;
         }
 
-        const file = await mmClient.getFileUploaded(metadata.id); // eslint-disable-line no-await-in-loop
+        const file = await tryPromise<stream>(mmClient.getFileUploaded(metadata.id), ExceptionType.TEXT_ERROR, i18nObj.__('general.mattermost-errors.get-file'), call); // eslint-disable-line no-await-in-loop
 
         const requestBody = {
             name: metadata.name,
@@ -141,7 +142,7 @@ export async function uploadFileConfirmationSubmit(call: ExtendedAppCallRequest)
         root_id: postId,
     };
 
-    await tryPromiseMattermost<PostResponse>(mmClient.createPost(postCreate), ExceptionType.TEXT_ERROR, i18nObj.__('general.mattermost-error'), call);
+    await tryPromise<PostResponse>(mmClient.createPost(postCreate), ExceptionType.TEXT_ERROR, i18nObj.__('general.mattermost-errors.post-create'), call);
 
     return message;
 }

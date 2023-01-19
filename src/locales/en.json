@@ -1,5 +1,15 @@
 {
 	"general": {
+		"mattermost-errors": {
+			"post-create": "\"Mattermost failed\": Mattermost failed to create the post",
+			"get-members": "\"Mattermost failed\": Mattermost failed to get members of given channel",
+			"get-users": "\"Mattermost failed\": Mattermost failed to get Mattermost users list",
+			"get-file": "\"Mattermost failed\": Mattermost failed to get file",
+			"get-config": "\"Mattermost failed\": Mattermost failed to get Mattermost instance configuration",
+			"get-post": "\"Mattermost failed\": Mattermost failed to get the post",
+			"create-channel": "\"Mattermost failed\": Mattermost failed to create a new channel with Google Drive Bot",
+			"get-user": "\"Mattermost failed\": Mattermost failed to get the user"
+		},
 		"token-failed": "\"Google failed\": Google failed to refresh access token",
 		"google-error": "Google failed: ",
 		"mattermost-error": "Mattermost failed: ",

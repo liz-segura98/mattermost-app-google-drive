@@ -15,6 +15,7 @@ import {
     MattermostOptions,
     Params$Resource$Files$Get,
     PostCreate,
+    PostResponse,
     Schema$Document,
     Schema$File,
     Schema$Presentation,
@@ -24,7 +25,7 @@ import {
 import { CreateFileForm } from '../types/forms';
 import { ShareFileFunction } from '../types/functions';
 import { configureI18n } from '../utils/translations';
-import { tryPromise, tryPromiseMattermost } from '../utils/utils';
+import { tryPromise } from '../utils/utils';
 
 import { SHARE_FILE_ACTIONS } from './share-google-file';
 
@@ -42,7 +43,7 @@ export async function createGoogleDocForm(call: ExtendedAppCallRequest): Promise
     };
     const mmClient: MattermostClient = new MattermostClient(mattermostOpts);
 
-    const configClient: ClientConfig = await tryPromiseMattermost<ClientConfig>(mmClient.getConfigClient(), ExceptionType.TEXT_ERROR, i18nObj.__('general.mattermost-error'), call);
+    const configClient: ClientConfig = await tryPromise<ClientConfig>(mmClient.getConfigClient(), ExceptionType.TEXT_ERROR, i18nObj.__('general.mattermost-errors.get-config'), call);
     const showEmailAddress: string | undefined = configClient?.ShowEmailAddress;
 
     const willShare = values?.google_file_will_share === undefined ?
@@ -153,7 +154,7 @@ export async function createGoogleDocSubmit(call: ExtendedAppCallRequest): Promi
 
     let channelId: string = call.context.channel?.id as string;
     if (!values.google_file_will_share) {
-        const channel: Channel = await mmClient.createDirectChannel([<string>botUserId, <string>actingUserId]);
+        const channel: Channel = await tryPromise<Channel>(mmClient.createDirectChannel([<string>botUserId, <string>actingUserId]), ExceptionType.TEXT_ERROR, i18nObj.__('general.mattermost-errors.create-channel'), call);
         channelId = channel.id;
     }
 
@@ -177,7 +178,7 @@ export async function createGoogleDocSubmit(call: ExtendedAppCallRequest): Promi
             ],
         },
     };
-    await mmClient.createPost(post);
+    await tryPromise<PostResponse>(mmClient.createPost(post), ExceptionType.TEXT_ERROR, i18nObj.__('general.mattermost-errors.post-create'), call);
 
     const shareFile: ShareFileFunction = SHARE_FILE_ACTIONS[values.google_file_access.value];
     if (shareFile) {
@@ -201,7 +202,7 @@ export async function createGoogleSlidesForm(call: ExtendedAppCallRequest): Prom
     };
     const mmClient: MattermostClient = new MattermostClient(mattermostOpts);
 
-    const configClient: ClientConfig = await tryPromiseMattermost<ClientConfig>(mmClient.getConfigClient(), ExceptionType.TEXT_ERROR, i18nObj.__('general.mattermost-error'), call);
+    const configClient: ClientConfig = await tryPromise<ClientConfig>(mmClient.getConfigClient(), ExceptionType.TEXT_ERROR, i18nObj.__('general.mattermost-errors.get-config'), call);
     const showEmailAddress: string | undefined = configClient?.ShowEmailAddress;
 
     const willShare = values?.google_file_will_share === undefined ?
@@ -312,7 +313,7 @@ export async function createGoogleSlidesSubmit(call: ExtendedAppCallRequest): Pr
 
     let channelId: string = call.context.channel?.id as string;
     if (!values.google_file_will_share) {
-        const channel: Channel = await mmClient.createDirectChannel([<string>botUserId, <string>actingUserId]);
+        const channel: Channel = await tryPromise<Channel>(mmClient.createDirectChannel([<string>botUserId, <string>actingUserId]), ExceptionType.TEXT_ERROR, i18nObj.__('general.mattermost-errors.create-channel'), call);
         channelId = channel.id;
     }
     const date = moment(file?.createdTime).format('MMM Do, YYYY');
@@ -335,7 +336,7 @@ export async function createGoogleSlidesSubmit(call: ExtendedAppCallRequest): Pr
             ],
         },
     };
-    await mmClient.createPost(post);
+    await tryPromise<PostResponse>(mmClient.createPost(post), ExceptionType.TEXT_ERROR, i18nObj.__('general.mattermost-errors.post-create'), call);
     const shareFile: ShareFileFunction = SHARE_FILE_ACTIONS[values.google_file_access.value];
     if (shareFile) {
         await shareFile(call, file, channelId);
@@ -358,7 +359,7 @@ export async function createGoogleSheetsForm(call: ExtendedAppCallRequest): Prom
     };
     const mmClient: MattermostClient = new MattermostClient(mattermostOpts);
 
-    const configClient: ClientConfig = await tryPromiseMattermost<ClientConfig>(mmClient.getConfigClient(), ExceptionType.TEXT_ERROR, i18nObj.__('general.mattermost-error'), call);
+    const configClient: ClientConfig = await tryPromise<ClientConfig>(mmClient.getConfigClient(), ExceptionType.TEXT_ERROR, i18nObj.__('general.mattermost-errors.get-config'), call);
     const showEmailAddress: string | undefined = configClient?.ShowEmailAddress;
 
     const willShare = values?.google_file_will_share === undefined ?
@@ -471,7 +472,7 @@ export async function createGoogleSheetsSubmit(call: ExtendedAppCallRequest): Pr
 
     let channelId: string = call.context.channel?.id as string;
     if (!values.google_file_will_share) {
-        const channel: Channel = await mmClient.createDirectChannel([<string>botUserId, <string>actingUserId]);
+        const channel: Channel = await tryPromise<Channel>(mmClient.createDirectChannel([<string>botUserId, <string>actingUserId]), ExceptionType.TEXT_ERROR, i18nObj.__('general.mattermost-errors.create-channel'), call);
         channelId = channel.id;
     }
     const date = moment(file?.createdTime).format('MMM Do, YYYY');
@@ -494,7 +495,7 @@ export async function createGoogleSheetsSubmit(call: ExtendedAppCallRequest): Pr
             ],
         },
     };
-    await mmClient.createPost(post);
+    await tryPromise<PostResponse>(mmClient.createPost(post), ExceptionType.TEXT_ERROR, i18nObj.__('general.mattermost-errors.post-create'), call);
 
     const shareFile: ShareFileFunction = SHARE_FILE_ACTIONS[values.google_file_access.value];
     if (shareFile) {

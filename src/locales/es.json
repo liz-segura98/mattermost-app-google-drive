@@ -1,5 +1,15 @@
 {
   "general": {
+    "mattermost-errors": {
+      "post-create": "\"Mattermost falló\": Mattermost falló en crear el post",
+      "get-members": "\"Mattermost falló\": Mattermost falló en obtener el listado de miembros del canal dado",
+      "get-users": "\"Mattermost falló\": Mattermost falló en obtener el listado de usuarios Mattermost",
+      "get-file": "\"Mattermost falló\": Mattermost falló en obtener el archivo",
+      "get-config": "\"Mattermost falló\": Mattermost falló en obtener la configuración de la instancia de Mattermost",
+      "get-post": "\"Mattermost falló\": Mattermost falló al obtener el post",
+      "create-channel": "\"Mattermost falló\": Mattermost fallóal crear un chat privado con el Bot de Google Drive",
+      "get-user": "\"Mattermost falló\": Mattermost falló al obtener al user"
+    },
     "token-failed": "\"Google falló\": Google falló al refrescar el token de acceso",
     "google-error": "Google falló: ",
     "mattermost-error": "Mattermost falló: ",
